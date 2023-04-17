@@ -4,11 +4,19 @@ import 'react-native-url-polyfill/auto'
 import { useState, useEffect } from 'react'
 import { supabase } from './src/lib/supabaseClient'
 import Auth from './src/components/Auth'
-import Account from './src/pages/accountPage'
+
 import { Session } from '@supabase/supabase-js'
+import Landing from './src/pages/landingPage';
+import TabNav from './src/components/TabNavigation'
+import { NavigationContainer} from '@react-navigation/native';
+import  {TabDisplay} from './src/components/TabNavigation'
+import TestPage from './src/pages/pageTest2';
+import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null)
+  const Tab = createBottomTabNavigator();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -21,11 +29,20 @@ export default function App() {
   }, [])
 
   return (
-    <View>
-      {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
-    </View>
+    <NavigationContainer >
+      {session && session.user ? 
+      <Tab.Navigator initialRouteName='Home' tabBar={(props) => <TabDisplay {...props} />}>
+        <Tab.Screen name="Home" component={Landing} />
+        <Tab.Screen name="Settings" component={TestPage} />
+        <Tab.Screen name="Settingsa" component={TestPage} />
+        <Tab.Screen name="Saettings" component={TestPage} />
+      </Tab.Navigator>
+      : <Auth />}
+    </NavigationContainer>
   )
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

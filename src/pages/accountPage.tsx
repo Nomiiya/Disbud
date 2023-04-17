@@ -41,7 +41,7 @@ export default function Account({ session }: { session: Session }) {
       setLoading(false)
     }
   }
-
+/*
   async function updateProfile({
     username,
     website,
@@ -75,7 +75,7 @@ export default function Account({ session }: { session: Session }) {
     } finally {
       setLoading(false)
     }
-  }
+  }*/
 
   return (
     <View style={styles.container}>
@@ -85,10 +85,12 @@ export default function Account({ session }: { session: Session }) {
       <View style={styles.verticallySpaced}>
         <Input label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
       </View>
+{/*
       <View style={styles.verticallySpaced}>
         <Input label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
       </View>
 
+ 
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Button
           title={loading ? 'Loading ...' : 'Update'}
@@ -96,7 +98,7 @@ export default function Account({ session }: { session: Session }) {
           disabled={loading}
         />
       </View>
-
+*/}
       <View style={styles.verticallySpaced}>
         <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
       </View>
