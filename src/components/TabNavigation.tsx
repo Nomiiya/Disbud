@@ -1,16 +1,12 @@
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { NavigationContainer} from '@react-navigation/native';
 import { StyleSheet,Text,View,Pressable, TouchableOpacity} from 'react-native';
-import { Session } from '@supabase/supabase-js'
-
-import Testing from '../pages/pageTest'
-import TestPage from '../pages/pageTest2';
 
 const Tab = createBottomTabNavigator();
 
 export function TabDisplay({ state, descriptors, navigation }:{state: any, descriptors:any, navigation: any}){
     return(
         <View style={styles.container}>
+            {/*@ts-ignore */}
             {state.routes.map((route, index) => {
               const { options } = descriptors[route.key];
               const label =
@@ -61,12 +57,14 @@ export function TabDisplay({ state, descriptors, navigation }:{state: any, descr
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
       display: 'flex',
       flexDirection: 'row',
       height: '5%',
-      margin:'2%'
+      marginLeft:'auto',
+      marginRight: 'auto'
     },
   });
   

@@ -1,17 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import 'react-native-url-polyfill/auto'
 import { useState, useEffect } from 'react'
 import { supabase } from './src/lib/supabaseClient'
 import Auth from './src/components/Auth'
-
-import { Session } from '@supabase/supabase-js'
-import Landing from './src/pages/landingPage';
-import TabNav from './src/components/TabNavigation'
-import { NavigationContainer} from '@react-navigation/native';
-import  {TabDisplay} from './src/components/TabNavigation'
-import TestPage from './src/pages/pageTest2';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { NavigationContainer} from '@react-navigation/native';
+import { Session } from '@supabase/supabase-js'
+
+import Landing from './src/pages/landingPage';
+import InsertDataForm from './src/pages/insertDataPage';
+import TransactionsPage from './src/pages/transactionsPage';
+
+import  {TabDisplay} from './src/components/TabNavigation'
+import NavigationHeader from './src/components/Header'
+
 
 
 export default function App() {
@@ -30,14 +33,28 @@ export default function App() {
 
   return (
     <NavigationContainer >
+      
       {session && session.user ? 
-      <Tab.Navigator initialRouteName='Home' tabBar={(props) => <TabDisplay {...props} />}>
-        <Tab.Screen name="Home" component={Landing} />
-        <Tab.Screen name="Settings" component={TestPage} />
-        <Tab.Screen name="Settingsa" component={TestPage} />
-        <Tab.Screen name="Saettings" component={TestPage} />
-      </Tab.Navigator>
-      : <Auth />}
+        <Tab.Navigator 
+          initialRouteName='Home' 
+          tabBar={(props) => <TabDisplay {...props} />}
+          screenOptions={{headerTitle:(props) => <NavigationHeader {...props}/>}}
+        > 
+          <Tab.Screen 
+            name="Home" 
+            children={() => <Landing key={session.user.id} session={session} />
+          } />
+          <Tab.Screen 
+            name="Add" 
+            children={() => <InsertDataForm key={session.user.id} session={session} />
+          } />
+          <Tab.Screen 
+            name="Transactions" 
+            children={() => <TransactionsPage key={session.user.id} session={session} />
+          } />
+        </Tab.Navigator >
+        : <Auth />
+      }
     </NavigationContainer>
   )
 }
