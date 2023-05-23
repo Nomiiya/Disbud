@@ -9,7 +9,7 @@ import TransactionsPage from './transactionsPage';
 import DataSummaryDisplay from '../components/DataDisplay'
 
 
-export default function Landing({session}: {session: Session}) {
+export default function Landing({session}: {session: Session}, {data}:{category: String; cost: String; frequency: String; id: Number; inserted_at: String; name: String; transactiontype: String; updated_at: String; user_id: String;}[] ) {
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState<String | null>();
     const [budgetData, setBudgetData] = useState<
